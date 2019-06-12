@@ -1,0 +1,24 @@
+@import url("http://fonts.googleapis.com/css?family=Abhaya+Libre&subset=latin,latin-ext");
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 2vw;
+}
+
+body {
+  margin: 0;
+  font-family: 'Abhaya Libre', sans-serif;
+  background-color: white;
+  box-sizing: border-box;
+  
+}
+/*
+  KOLORY :
+
+  zielony:  #a0af22
+
+
+*/
+
