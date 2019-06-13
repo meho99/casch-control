@@ -11,18 +11,25 @@ const Container = styled.div`
     text-align: center;
     flex-direction: column;
     align-items: center;
+    background-color: #1a1a1d;
+    border-bottom: 0.2vw solid #a0af22;
+    border-bottom-left-radius: 20%;
+    border-bottom-right-radius: 20%;
+    -webkit-box-shadow: 5px 5px 15px 5px #000000; 
+    box-shadow: 5px 5px 15px 5px #000000;
+    margin-bottom: 2vw;
 `
 
 const Header = styled.h1`
-    font-size: 5vw;
+    font-size: 4vw;
     color: #a0af22;
     font-style: oblique;
-    margin-top: 2vw;
 `
 
 const SmallText = styled.p`
-    font-size: 2vw;
-    color: black;
+    font-size: 1.5vw;
+    color: #c5c6c7;
+    margin-bottom: 1vw;
 `
 
 // ----- komponent -----
