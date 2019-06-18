@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import {connect} from 'react-redux'
+import actions from '../../redux/actions/actions'
 
 // ----- ikonki -----
 
@@ -98,7 +100,7 @@ const Button = styled.button`
 // ----- komponent -----
 
 
-export default class FormComponent extends Component {
+class FormComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -107,16 +109,56 @@ export default class FormComponent extends Component {
             earned: true,
         };
 
+        this.moneyInput= React.createRef(); // input pieniądze
+        this.nameInput= React.createRef() // input  nazwa
+        
     }
 
     // -- obsługa formularzy --
 
     changeValue = (e, field) => {
-        this.setState({ field: e.value })
+
+        this.setState({ [field]: e.target.value })
+
     }
 
     changeType = () => {
+
         this.setState({ earned: !this.state.earned })
+
+    }
+
+    // -- zatwierdzenie nowej operacji --
+
+    addOperation = (e)=>{
+        e.preventDefault();
+        let d= new Date;
+        let date={
+            day: this.addZero(d.getDate()),
+            month: this.addZero(d.getMonth()),
+            year: d.getFullYear()
+        }
+        let get = this.state.earned?'+':'-';
+        
+        this.props.add({
+            name: this.state.name,
+            price: this.state.money,
+            date: date,
+            get: get
+        })
+
+        // zerowanie inputów
+        this.moneyInput.current.value= 0;
+        this.nameInput.current.value= '';
+    }
+
+    // -- formatowanie daty --
+
+    addZero = (number) =>{
+        if(String(number).length== 1)
+            return `0${number}`
+        
+        else return number;
     }
 
     render() {
@@ -126,8 +168,8 @@ export default class FormComponent extends Component {
                 <Center>
                     <OneSide>
 
-                        <Inputs><p>Description</p><Input name='name' type='text'></Input></Inputs>
-                        <Inputs><p>Money  </p><Input name='name' type='number'></Input></Inputs>
+                        <Inputs><p>Description</p><Input onChange={(e)=>this.changeValue(e,'name')} ref={this.nameInput} name='name' type='text'></Input></Inputs>
+                        <Inputs><p>Money  </p><Input onChange={(e)=>this.changeValue(e,'money')} ref={this.moneyInput}  name='name' min={0} type='number'></Input></Inputs>
 
                     </OneSide>
                     <OneSide>
@@ -152,8 +194,14 @@ export default class FormComponent extends Component {
                     </OneSide>
 
                 </Center>
-                <Button>+</Button>
+                <Button onClick={this.addOperation}>+</Button>
             </Container>
         );
     }
 }
+
+const mapDispatchToProps = dispatch => ({
+    add: action=> dispatch(actions.add(action))
+})
+
+export default connect(null, mapDispatchToProps)(FormComponent)

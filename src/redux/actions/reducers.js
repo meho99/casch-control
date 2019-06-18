@@ -4,36 +4,28 @@ import types from './types';
 
 const INITIAL_STATE = {
     listName: 'HistoryOfActions',
+    summary: {
+        all: 0,
+
+    },
     list: [
-        {
-            name: 'baton',
-            price: '2',
-            date: {
-                year: 2019,
-                month: 5,
-                day: 15,
-            },
-            get: "-"
-        },
-        {
-            name: 'wypłata',
-            price: '2000',
-            date: {
-                year: 2019,
-                month: 5,
-                day: 25
-            },
-            get: '+'
-        }
     ]
 }
 const actionsReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case types.ADD_ACTION: // ----- dodanie akcji -----
+
+        // ----- dodanie akcji -----
+
+        case types.ADD_ACTION: 
+            let money= action.item.get==='+'?action.item.price:-action.item.price;
+            state.summary.all += Number(money);
             return {
                 ...state, list: [...state.list, action.item]
             }
-        default: // ----- zwraca dane bez zmian -----
+            
+        // ----- zwraca dane bez zmian -----
+
+        default: 
             return state;
 
     }
